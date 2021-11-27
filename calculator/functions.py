@@ -1,7 +1,6 @@
 from math import *
 from . import Exceptions
 
-
 def check_two_error(func):
     def inner(args):
         if not isinstance(args, tuple):
@@ -59,19 +58,20 @@ def operate_math(method, *args):
     try:
         m = eval(method)
         if len(args) == 1:
+            try:
+                return m(args[0])
+            except TypeError:
+                return m(args)
+        try:
+            return m(args)
+        except TypeError:
             return m(args[0])
-        return m(args)
 
     except Exceptions.TwoArgumentNeeded:
         raise Exceptions.TwoArgumentNeeded
 
-    except Exceptions.OneArgumentNeeded:
-        raise Exceptions.OneArgumentNeeded
-
-    except Exceptions.IntgerAllowed:
-        raise Exceptions.IntgerAllowed
-
     except Exception as e:
+        print(type(e))
         raise e
 
 

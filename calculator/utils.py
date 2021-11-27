@@ -1,5 +1,6 @@
 import math
-from .functions import *
+
+Excluded = {'copysign', 'nan', 'pi', 'hypot', 'inf','idexp','tau', 'e', 'gcd'}
 
 
 def available_operations():
@@ -15,5 +16,6 @@ def wrap_available_operations():
     result = available_operations()
     out = []
     for elem in result.values():
-        out += elem
+        out = out + elem
+    out = set(out) - Excluded
     return out

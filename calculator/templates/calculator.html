@@ -3,14 +3,15 @@
 {%  block content %}
     <h2>Insert parameters</h2>
     <p>Please choose operation:</p>
-    <p>Note: Please insert one element list for single argument methods like round, ceil. Only list of arguments is accepted.</p>
+    <p><b>Note</b>: Please insert one element list for single argument methods like float(). Only list of arguments is accepted.</p>
+    <p>e.g. [1] or [1,2]</p>
     <form method="post" action="/operate">
         {% if form.errors %}
 
         {% endif %}
         {{ form.as_p }}
         {% csrf_token %}
-        <input type="submit" value="params">
+        <input type="submit" value="Proceed">
     </form>
     {% if out %}
         <h4>Result:</h4>

@@ -7,6 +7,7 @@ from .Exceptions import NotValidOperation
 import json
 from .functions import *
 from .forms import OperationForm, AddOperationForm
+from django.db import IntegrityError
 
 # Create your views here.
 
@@ -24,11 +25,14 @@ def functions(request):
             insert_function(data)
             return JsonResponse('Inserted successfully', safe=False)
         except KeyError:
-            return HttpResponseBadRequest('Invalid data. Try type key')
+            return JsonResponse('Invalid data. Try type key', safe=False)
         except NotValidOperation:
-            return HttpResponseBadRequest('Not a valid mathematical operation. Please check /valid_operations')
+            return JsonResponse('Not a valid mathematical operation. Please check /valid_operations',safe=False)
+        except IntegrityError  as e:
+            return JsonResponse('Method already added', safe=False)
         except Exception:
-            return HttpResponseBadRequest('Error inserting data')
+            return JsonResponse('Error inserting data', safe=False)
+            # return HttpResponseBadRequest()
 
     if request.method == 'GET':
         out = get_function()
@@ -51,15 +55,6 @@ def new_check(elem):
         raise ValueError("Only float and integers allow")
 
 
-def format_res(elem):
-    if new_check(elem):
-        try:
-            o = int(elem)
-            return o
-        except ValueError:
-            o = float(elem)
-            return o
-
 @csrf_exempt
 def operate_function(request):
     op_form = OperationForm(request.POST)
@@ -70,8 +65,8 @@ def operate_function(request):
             if not isinstance(p, list):
                 return render(request, 'calculator.html',
                               {'form': op_form, 'error': 'Invalid data. Send list of arguments only'})
-            formatted_params = list(map(format_res, p))
-            out = operate_math(op, *formatted_params)
+
+            out = operate_math(op, *p)
             return render(request, 'calculator.html', {'form': op_form, 'out': str(out)})
         else:
             return render(request, 'calculator.html',
