@@ -9,8 +9,6 @@ def get_choices():
 
 
 class OperationForm(forms.Form):
-    choices = Methods.objects.all()
-    ch = [(elem.name, elem.name) for elem in Methods.objects.all()]
     operation = forms.ChoiceField(choices=get_choices)
     params = forms.JSONField()
 
