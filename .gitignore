@@ -1,0 +1,4 @@
+*.pyc
+.idea
+virtual
+*.sqlite3

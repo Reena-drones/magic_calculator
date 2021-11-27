@@ -1,6 +1,6 @@
 from django import forms
 from .models import Methods
-from .utils import available_operations, wrap_available_operations
+from .utils import wrap_available_operations
 
 
 def get_choices():

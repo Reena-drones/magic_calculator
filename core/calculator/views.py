@@ -64,11 +64,9 @@ def format_res(elem):
 def operate_function(request):
     op_form = OperationForm(request.POST)
     try:
-        print(op_form.is_valid())
         if op_form.is_valid():
             op = request.POST.get('operation')
             p = json.loads(request.POST.get('params'))
-            print(type(p))
             if not isinstance(p, list):
                 return render(request, 'calculator.html',
                               {'form': op_form, 'error': 'Invalid data. Send list of arguments only'})
