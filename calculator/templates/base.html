@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+    function addMethod() {
+        var name = document.getElementById("id_operation").value;
+        console.log(name)
+        fetch('http://127.0.0.1:8000/function', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({"type": name}),
+        })
+        .then(response => response.json())
+        .then(data => {
+        console.log('Success:', data);
+        alert(data);
+        })
+        .catch((error) => {
+        alert(error);
+        });
+    }
+    function removeMethod() {
+        var name = document.getElementById("id_operation").value;
+        fetch('http://127.0.0.1:8000/function', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({"type": name}),
+        })
+        .then(response => response.json())
+        .then(data => {
+        console.log('Success:', data);
+        alert(data);
+        })
+        .catch((error) => {
+        alert(error);
+        });
+    }
+</script>
+  <style>
+
+ul.errorlist {
+    display:none;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li {
+  float: right;
+}
+.header{
+    font-size: 20px;
+    float: left;
+}
+
+li h3{
+    color: white;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #111;
+}
+</style>
+</head>
+<body>
+<ul>
+    <li class="header"><a class="active" href="/">CALCULATOR</a></li>
+  <li><a class="active" href="/manage">Manage Operations</a></li>
+</ul>
+ <div id="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>
