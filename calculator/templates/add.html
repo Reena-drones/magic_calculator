@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {%  block content %}
-    <h2>Insert a new function</h2>
-    <p>Please add new mathematical operation from given dropdown:</p>
+    <h2>Manage Operations</h2>
+    <p>Please add/remove any mathematical operation from given dropdown:</p>
     <form onsubmit="return false">
         {{ methods.as_p }}
         <input type="submit" value="Add" id="name" onclick="addMethod()">
